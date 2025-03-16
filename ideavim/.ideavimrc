@@ -1,0 +1,67 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set NERDTree
+Plug 'machakann/vim-highlightedyank'
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+set clipboard+=unnamed
+set wrap
+set textwidth=140
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=visual
+
+""" Mappings --------------------------------
+"map <leader>f <Plug>(easymotion-s)
+
+
+" code action
+map gd <Action>(GotoDeclaration)
+map gr <Action>(GotoReference)
+map gI <Action>(GoToImplementation)
+map gS <Action>(GotoSuperMethod)
+map gD <Action>(GotoTypeDeclaration)
+map <leader>f <Action>(ReformatCode)
+map <leader>th <Action>(ShowIntentionActions)
+map <leader>ds <Action>(FileStructurePopup)
+map <leader>s. <Action>(RecentFiles)
+map <leader>r <Action>(RenameElement)
+map <leader>q <Action>(GotoNextError)
+
+" ide
+map - <Action>(SelectInProjectView)
+map <leader>an <Action>(Run)
+map <leader>ac <Action>(Stop)
+"map <leader>z <Action>(ToggleDistractionFreeMode)
+map <leader>z <Action>(HideAllWindows)
+map <leader>db <Action>(ToggleLineBreakpoint)
+map <leader>da <Action>(AndroidConnectDebuggerAction)
+
+""" VCS
+map <leader>gg <Action>(Vcs.QuickListPopupAction)
+map <leader>gc <Action>(CheckinProject)
+map <leader>gu <Action>(Vcs.UpdateProject)
+map <leader>gp <Action>(Vcs.Push)
+map <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
+map <leader>gbc <Action>(GitCheckoutFromInputAction)
+map <leader>gbn <Action>(GitNewBranchAction)
+"map <leader>gd <Action>(Diff.ShowStandaloneDiff)
+map <leader>gd <Action>(Vcs.RollbackChangedLines)
