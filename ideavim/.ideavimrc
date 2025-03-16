@@ -50,6 +50,7 @@ map <leader>q <Action>(GotoNextError)
 map - <Action>(SelectInProjectView)
 map <leader>an <Action>(Run)
 map <leader>ac <Action>(Stop)
+" toggle distraction mode will reset all tool window view mode, which is bad
 "map <leader>z <Action>(ToggleDistractionFreeMode)
 map <leader>z <Action>(HideAllWindows)
 map <leader>db <Action>(ToggleLineBreakpoint)
