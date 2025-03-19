@@ -20,18 +20,20 @@ set showmode
 set so=5
 set incsearch
 set nu
-set clipboard+=unnamed
+set clipboard+=unnamed,unnamedplus
 set wrap
 set textwidth=140
 
+set ignorecase
+set smartcase
+
 """ Idea specific settings ------------------
 set ideajoin
-set ideastatusicon=gray
+set ideastatusicon=enable
 set idearefactormode=visual
 
 """ Mappings --------------------------------
-"map <leader>f <Plug>(easymotion-s)
-
+" intellij ide code actions list: https://keithlea.com/idea-actions/
 
 " code action
 map gd <Action>(GotoDeclaration)
@@ -45,8 +47,10 @@ map <leader>ds <Action>(FileStructurePopup)
 map <leader>s. <Action>(RecentFiles)
 map <leader>r <Action>(RenameElement)
 map <leader>q <Action>(GotoNextError)
+map <leader>cg <Action>(Generate)
 
 " ide
+"map <leader>f <Plug>(easymotion-s)
 map - <Action>(SelectInProjectView)
 map <leader>an <Action>(Run)
 map <leader>ac <Action>(Stop)
@@ -55,6 +59,8 @@ map <leader>ac <Action>(Stop)
 map <leader>z <Action>(HideAllWindows)
 map <leader>db <Action>(ToggleLineBreakpoint)
 map <leader>da <Action>(AndroidConnectDebuggerAction)
+map <leader>cf <Action>(Find)
+map <leader>cf <Action>(Replace)
 
 """ VCS
 map <leader>gg <Action>(Vcs.QuickListPopupAction)
