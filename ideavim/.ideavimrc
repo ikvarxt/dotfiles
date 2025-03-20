@@ -72,3 +72,7 @@ map <leader>gbc <Action>(GitCheckoutFromInputAction)
 map <leader>gbn <Action>(GitNewBranchAction)
 "map <leader>gd <Action>(Diff.ShowStandaloneDiff)
 map <leader>gd <Action>(Vcs.RollbackChangedLines)
+
+" vim rc file
+noremap <leader>ve :edit ~/.ideavimrc<cr>
+map <leader>vs <Action>(IdeaVim.ReloadVimRc.reload)
