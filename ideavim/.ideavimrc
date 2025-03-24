@@ -23,9 +23,9 @@ set nu
 set clipboard+=unnamed,unnamedplus
 set wrap
 set textwidth=140
-
 set ignorecase
 set smartcase
+set matchpairs+=<:>
 
 """ Idea specific settings ------------------
 set ideajoin
@@ -38,16 +38,23 @@ set idearefactormode=visual
 " code action
 map gd <Action>(GotoDeclaration)
 map gr <Action>(GotoReference)
-map gI <Action>(GoToImplementation)
+map gI <Action>(GotoImplementation)
 map gS <Action>(GotoSuperMethod)
 map gD <Action>(GotoTypeDeclaration)
+
 map <leader>f <Action>(ReformatCode)
-map <leader>th <Action>(ShowIntentionActions)
-map <leader>ds <Action>(FileStructurePopup)
-map <leader>s. <Action>(RecentFiles)
-map <leader>r <Action>(RenameElement)
+map <leader>rn <Action>(RenameElement)
 map <leader>q <Action>(GotoNextError)
 map <leader>cg <Action>(Generate)
+map <leader>oi <Action>(OptimizeImports)
+map <leader>gt <Action>(GotoTest)
+
+map <leader>ta <Action>(ShowIntentionActions)
+map <leader>ds <Action>(FileStructurePopup)
+map <leader>s. <Action>(RecentFiles)
+map <leader>td <Action>(QuickTypeDefinition)
+map <leader>ti <Action>(ExpressionTypeInfo)
+map <leader>th <Action>(ShowHoverInfo)
 
 " ide
 "map <leader>f <Plug>(easymotion-s)
@@ -60,7 +67,8 @@ map <leader>z <Action>(HideAllWindows)
 map <leader>db <Action>(ToggleLineBreakpoint)
 map <leader>da <Action>(AndroidConnectDebuggerAction)
 map <leader>cf <Action>(Find)
-map <leader>cf <Action>(Replace)
+map <leader>cr <Action>(Replace)
+map <leader>re <Action>(RenameFile)
 
 """ VCS
 map <leader>gg <Action>(Vcs.QuickListPopupAction)
