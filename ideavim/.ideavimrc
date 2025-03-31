@@ -55,10 +55,12 @@ map <leader>s. <Action>(RecentFiles)
 map <leader>td <Action>(QuickTypeDefinition)
 map <leader>ti <Action>(ExpressionTypeInfo)
 map <leader>th <Action>(ShowHoverInfo)
+map <leader>tu <Action>(ShowUsages)
 
 " ide
-"map <leader>f <Plug>(easymotion-s)
+map <leader>e <Plug>(easymotion-s)
 map - <Action>(SelectInProjectView)
+map <leader>- :NERDTree<cr>
 map <leader>an <Action>(Run)
 map <leader>ac <Action>(Stop)
 " toggle distraction mode will reset all tool window view mode, which is bad
