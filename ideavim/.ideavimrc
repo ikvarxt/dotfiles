@@ -71,6 +71,7 @@ map <leader>da <Action>(AndroidConnectDebuggerAction)
 map <leader>cf <Action>(Find)
 map <leader>cr <Action>(Replace)
 map <leader>re <Action>(RenameFile)
+map <leader>tw <Action>(ToolWindowsGroup)
 
 """ VCS
 map <leader>gg <Action>(Vcs.QuickListPopupAction)
