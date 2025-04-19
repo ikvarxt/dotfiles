@@ -57,6 +57,7 @@ map <leader>td <Action>(QuickTypeDefinition)
 map <leader>ti <Action>(ExpressionTypeInfo)
 map <leader>th <Action>(ShowHoverInfo)
 map <leader>tu <Action>(ShowUsages)
+map <leader>t. <Action>(CollapseRegion)
 
 " ide
 map <leader>e <Plug>(easymotion-s)
@@ -73,6 +74,8 @@ map <leader>cff <Action>(Find)
 map <leader>cfr <Action>(Replace)
 map <leader>re <Action>(RenameFile)
 map <leader>tw <Action>(ToolWindowsGroup)
+
+map <leader>sf <Action>(GotoFile)
 
 """ VCS
 map <leader>gg <Action>(Vcs.QuickListPopupAction)
