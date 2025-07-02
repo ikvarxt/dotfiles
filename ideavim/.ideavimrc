@@ -53,7 +53,6 @@ map <leader>cr <Action>(Refactorings.QuickListPopupAction)
 map <leader>ta <Action>(ShowIntentionActions)
 map <leader>ds <Action>(FileStructurePopup)
 map <leader>s. <Action>(RecentFiles)
-map <leader>sf <Action>(GotoFile)
 map <leader>td <Action>(QuickTypeDefinition)
 map <leader>ti <Action>(ExpressionTypeInfo)
 map <leader>th <Action>(ShowHoverInfo)
@@ -75,8 +74,14 @@ map <leader>cff <Action>(Find)
 map <leader>cfr <Action>(Replace)
 map <leader>re <Action>(RenameFile)
 map <leader>tw <Action>(ToolWindowsGroup)
-
 map <leader>sf <Action>(GotoFile)
+map <leader>sa <Action>(GotoAction)
+" window
+map <leader>wt <Action>(ActivateTerminalToolWindow)
+map <leader>wl <Action>(ActivateLogcatToolWindow)
+map <leader>wb <Action>(ActivateBuildToolWindow)
+map <leader>wg <Action>(ActivateVersionControlToolWindow)
+map <leader>wv <Action>(Vcs.Show.Log)
 
 """ VCS
 map <leader>gg <Action>(Vcs.QuickListPopupAction)
