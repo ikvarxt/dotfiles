@@ -398,6 +398,20 @@ require('lazy').setup({
           -- mappings = {
           --   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
           -- },
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--trim', -- add this value
+            '-g',
+            '!**/*.g.dart',
+            '-g',
+            '!**/*.freezed.dart',
+          },
         },
         pickers = {
           layout_config = {
@@ -405,6 +419,10 @@ require('lazy').setup({
               prompt_position = 'top',
               mirror = true,
             },
+          },
+          find_files = {
+            -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+            find_command = { 'rg', '--files', '--glob', '!**/*.g.dart' },
           },
         },
         extensions = {
