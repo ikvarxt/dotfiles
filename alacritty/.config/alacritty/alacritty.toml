@@ -1,0 +1,30 @@
+# conf doc: https://alacritty.org/config-alacritty.html
+[general]
+live_config_reload = true
+
+[window]
+dimensions = { columns = 170, lines = 50 }
+position = { y = 0 }
+decorations = "Buttonless" # macOS
+padding = { x = 0, y = 0 }
+dynamic_padding = true
+option_as_alt = "Both" # only macOS
+
+[font]
+size = 14.5
+normal = { family = "Maple Mono NF CN", style = "Regular" }
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
+[mouse]
+hide_when_typing = true
+bindings = [ 
+	{ mouse = "Middle", mods = "Control", action = "Paste"},
+]
+
+[keyboard]
+
