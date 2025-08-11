@@ -29,4 +29,4 @@ bindings = [
 
 
 [terminal]
-shell = { program = '/usr/local//bin/tmux', args = ['new-session', '-A', '-D', '-s', 'main'] }
+# shell = { program = '/usr/local/bin/tmux', args = ['new-session', '-A', '-D', '-s', 'main'] }
