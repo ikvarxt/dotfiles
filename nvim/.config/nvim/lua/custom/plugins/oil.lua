@@ -14,7 +14,7 @@ return {
     },
     keymaps = {
       ['yp'] = {
-        desc = 'Copy filepath to system clipboard',
+        desc = 'Copy relative filepath to system clipboard',
         callback = function()
           local oil = require 'oil'
           local dir = oil.get_current_dir()
