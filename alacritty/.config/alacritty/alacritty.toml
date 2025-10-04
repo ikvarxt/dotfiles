@@ -6,10 +6,12 @@ live_config_reload = true
 [window]
 dimensions = { columns = 170, lines = 50 }
 position = { y = 0 }
-decorations = "Buttonless" # macOS
+decorations = "Full" # macOS
 padding = { x = 0, y = 0 }
 dynamic_padding = true
 option_as_alt = "Both" # only macOS
+dynamic_title = false
+title = "Do not go gentle into that good night."
 
 [font]
 size = 14.5
