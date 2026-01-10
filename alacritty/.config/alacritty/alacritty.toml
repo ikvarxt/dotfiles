@@ -24,7 +24,7 @@ save_to_clipboard = true
 style = { shape = "Block", blinking = "On" }
 
 [mouse]
-bindings = [ 
+bindings = [
 	{ mouse = "Middle", mods = "Control", action = "Paste"},
 ]
 

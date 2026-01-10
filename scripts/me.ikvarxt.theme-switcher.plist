@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>me.ikvarxt.theme-switcher</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>~/dotfiles/scripts/theme-switcher.sh</string>
+    </array>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/me.ikvarxt.theme-switcher.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/me.ikvarxt.theme-switcher.log</string>
+    <key>Debug</key>
+    <true/>
+
+    <key>WatchPaths</key>
+    <array>
+        <string>/Users/ikvarxt/Library/Preferences/.GlobalPreferences.plist</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
