@@ -5,5 +5,19 @@ return {
     'nvim-lua/plenary.nvim',
     -- 'stevearc/dressing.nvim', -- optional for vim.ui.select
   },
-  config = true,
+  config = function()
+    require('flutter-tools').setup {
+      widget_guides = {
+        enabled = true,
+      },
+      lsp = {
+        settings = {
+          analysisExcludedFolders = {
+            vim.fn.expand '$HOME/.pub-cache',
+          },
+        },
+      },
+    }
+    require('telescope').load_extension 'flutter'
+  end,
 }
