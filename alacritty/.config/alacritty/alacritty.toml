@@ -1,6 +1,6 @@
 # conf doc: https://alacritty.org/config-alacritty.html
 [general]
-import = ["./catppuccin-mocha.toml"]
+import = ["./catppuccin-latte.toml"]
 live_config_reload = true
 
 [window]
