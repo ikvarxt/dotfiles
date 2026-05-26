@@ -1,0 +1,54 @@
+# Ghostty config
+# doc: https://ghostty.org/docs/config/reference
+
+# ── Font ──────────────────────────────────────────────────────────────────────
+font-family = Maple Mono NF CN
+font-size = 14.5
+font-thicken = true
+
+# ── Theme ─────────────────────────────────────────────────────────────────────
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+
+# ── Window ────────────────────────────────────────────────────────────────────
+window-width = 170
+window-height = 50
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = true
+window-decoration = auto
+
+# ── Cursor ────────────────────────────────────────────────────────────────────
+cursor-style = block
+cursor-style-blink = true
+cursor-click-to-move = false
+link-url = true
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+macos-non-native-fullscreen=visible-menu
+macos-option-as-alt = true
+
+# ── Title ─────────────────────────────────────────────────────────────────────
+title = Do not go gentle into that good night.
+
+# ── Clipboard & Selection ─────────────────────────────────────────────────────
+copy-on-select = clipboard
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
+
+# ── Mouse ─────────────────────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+
+# keyboard
+mouse-shift-capture = true
+
+# ── Scrollback ────────────────────────────────────────────────────────────────
+scrollback-limit = 10000
+scrollbar = never
+
+# ── Shell Integration ─────────────────────────────────────────────────────────
+shell-integration = detect
+
+# notify
+notify-on-command-finish = unfocused
+notify-on-command-finish-after = 5s
+
