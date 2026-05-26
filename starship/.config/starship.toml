@@ -1,8 +1,10 @@
 command_timeout = 1000
 
+[directory]
+truncation_length = 0
+
 [aws]
 disabled = true
-
 
 [git_commit]
 commit_hash_length = 7
@@ -11,3 +13,11 @@ style = "bold yellow"
 # format = '[\($hash$tag\)]($style) '
 tag_disabled = false
 tag_symbol = "🔖 "
+
+# [custom.git_worktree]
+# command = "git rev-parse --is-inside-work-tree" # Checks if in a worktree
+# when = "git rev-parse --is-inside-work-tree 2> /dev/null"
+# shell = ["bash", "--noprofile", "--norc"]
+# format = "[$symbol]($style) "
+# symbol = "🌿 " # Choose your preferred worktree icon
+# style = "bold green"
