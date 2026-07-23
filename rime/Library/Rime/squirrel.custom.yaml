@@ -1,0 +1,17 @@
+patch:
+  # 中文和英文均使用 Programmer Dvorak 的逻辑键位。
+  keyboard_layout: com.apple.keyboardlayout.Programmer Dvorak
+
+  # 使用鼠须管内置的 macOS 原生自适应配色与横向候选窗。
+  style/color_scheme: native
+  style/candidate_list_layout: linear
+  style/text_orientation: horizontal
+  style/inline_preedit: true
+  style/remember_size: false
+  style/status_message_type: long
+
+  # 在菜单栏持续显示当前鼠须管状态（需要 1.1.2 之后的版本）。
+  status_icon/show: true
+
+  # 不在光标附近显示切换提示；菜单栏状态仍然保留。
+  show_notifications_when: never

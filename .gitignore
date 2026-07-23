@@ -1,2 +1,10 @@
 # macOS
 .DS_Store
+
+# Rime dictionary backups: only encrypted snapshots are tracked.
+rime-data/*.txt
+rime-data/*.key
+rime-data/*.identity
+rime-data/.tmp-*
+!rime-data/age-recipient.txt
+!rime-data/squirrel-commit.txt

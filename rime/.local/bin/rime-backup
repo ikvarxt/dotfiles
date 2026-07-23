@@ -1,0 +1,124 @@
+#!/bin/bash
+
+set -euo pipefail
+
+mode="${1:---snapshot}"
+if [[ "$mode" != "--snapshot" && "$mode" != "--push" ]]; then
+  echo "usage: rime-backup [--snapshot|--push]" >&2
+  exit 2
+fi
+
+dotfiles_root="$HOME/dotfiles"
+data_dir="$dotfiles_root/rime-data"
+rime_dir="$HOME/Library/Rime"
+installation_file="$rime_dir/installation.yaml"
+squirrel_app="/Library/Input Methods/Squirrel.app"
+squirrel_bin="$squirrel_app/Contents/MacOS/Squirrel"
+recipient_file="$data_dir/age-recipient.txt"
+encrypted_file="$data_dir/luna_pinyin.userdb.txt.age"
+hash_file="$data_dir/luna_pinyin.userdb.sha256"
+lock_dir="$HOME/Library/Application Support/rime-backup/backup.lock"
+
+mkdir -p "$data_dir" "$(dirname "$lock_dir")"
+if ! mkdir "$lock_dir" 2>/dev/null; then
+  echo "another Rime backup is already running"
+  exit 0
+fi
+
+temporary_file=""
+cleanup() {
+  if [[ -n "$temporary_file" && -e "$temporary_file" ]]; then
+    rm -f "$temporary_file"
+  fi
+  rmdir "$lock_dir" 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
+for required_file in "$installation_file" "$squirrel_bin" "$recipient_file"; do
+  if [[ ! -f "$required_file" ]]; then
+    echo "missing required file: $required_file" >&2
+    exit 1
+  fi
+done
+
+if ! command -v age >/dev/null 2>&1; then
+  echo "age is not installed" >&2
+  exit 1
+fi
+
+installation_id="$(
+  sed -n 's/^installation_id:[[:space:]]*//p' "$installation_file" |
+    tr -d '"[:space:]'
+)"
+if [[ -z "$installation_id" ]]; then
+  echo "cannot read installation_id" >&2
+  exit 1
+fi
+
+snapshot_file="$rime_dir/sync/$installation_id/luna_pinyin.userdb.txt"
+previous_mtime=0
+if [[ -f "$snapshot_file" ]]; then
+  previous_mtime="$(stat -f '%m' "$snapshot_file")"
+fi
+
+if ! pgrep -x Squirrel >/dev/null 2>&1; then
+  open "$squirrel_app"
+  sleep 2
+fi
+"$squirrel_bin" --sync
+
+sync_complete=false
+for _ in $(seq 1 720); do
+  if [[ -s "$snapshot_file" ]]; then
+    current_mtime="$(stat -f '%m' "$snapshot_file")"
+    if [[ "$previous_mtime" -eq 0 || "$current_mtime" -gt "$previous_mtime" ]]; then
+      sync_complete=true
+      break
+    fi
+  fi
+  sleep 0.25
+done
+
+if [[ "$sync_complete" != true ]]; then
+  echo "Squirrel did not produce a fresh dictionary snapshot" >&2
+  exit 1
+fi
+
+snapshot_hash="$(shasum -a 256 "$snapshot_file" | awk '{print $1}')"
+stored_hash=""
+if [[ -f "$hash_file" ]]; then
+  stored_hash="$(tr -d '[:space:]' < "$hash_file")"
+fi
+
+if [[ "$snapshot_hash" != "$stored_hash" || ! -s "$encrypted_file" ]]; then
+  recipient="$(tr -d '[:space:]' < "$recipient_file")"
+  temporary_file="$(mktemp "$data_dir/.tmp-luna-pinyin.XXXXXX")"
+  rm -f "$temporary_file"
+  age --recipient "$recipient" --output "$temporary_file" "$snapshot_file"
+  mv "$temporary_file" "$encrypted_file"
+  temporary_file=""
+
+  hash_temporary="$hash_file.tmp.$$"
+  printf '%s\n' "$snapshot_hash" > "$hash_temporary"
+  mv "$hash_temporary" "$hash_file"
+  echo "updated encrypted Rime dictionary snapshot"
+else
+  echo "Rime dictionary snapshot is unchanged"
+fi
+
+if [[ "$mode" == "--push" ]]; then
+  other_changes="$(
+    git -C "$dotfiles_root" status --porcelain=v1 -- \
+      . ':(exclude)rime/**' ':(exclude)rime-data/**'
+  )"
+  if [[ -n "$other_changes" ]]; then
+    echo "dotfiles has unrelated changes; snapshot kept locally without commit" >&2
+    exit 0
+  fi
+
+  git -C "$dotfiles_root" add -- rime rime-data
+  if ! git -C "$dotfiles_root" diff --cached --quiet; then
+    git -C "$dotfiles_root" commit -m "backup(rime): update $(date +%F)"
+  fi
+  git -C "$dotfiles_root" push origin HEAD
+fi

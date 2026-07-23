@@ -1,0 +1,14 @@
+patch:
+  schema_list:
+    - schema: double_pinyin_flypy_dvorak
+
+  # 与 macOS 原生候选窗接近，并保留数字键直选。
+  menu/page_size: 9
+
+  # 中文组词过程中按任一 Shift：提交原始按键串，并切换到英文。
+  ascii_composer/switch_key/Shift_L: commit_code
+  ascii_composer/switch_key/Shift_R: commit_code
+
+  key_binder/bindings:
+    __patch:
+      - key_bindings:/emacs_editing

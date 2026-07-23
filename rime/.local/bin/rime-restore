@@ -1,0 +1,73 @@
+#!/bin/bash
+
+set -euo pipefail
+
+dotfiles_root="$HOME/dotfiles"
+rime_dir="$HOME/Library/Rime"
+encrypted_file="$dotfiles_root/rime-data/luna_pinyin.userdb.txt.age"
+identity_file="${1:-$HOME/Library/Application Support/rime-backup/age-key.txt}"
+squirrel_app="/Library/Input Methods/Squirrel.app"
+squirrel_bin="$squirrel_app/Contents/MacOS/Squirrel"
+restore_dir="$rime_dir/sync/github-restore"
+installation_file="$rime_dir/installation.yaml"
+
+for required_file in "$encrypted_file" "$identity_file" "$squirrel_bin"; do
+  if [[ ! -f "$required_file" ]]; then
+    echo "missing required file: $required_file" >&2
+    exit 1
+  fi
+done
+
+stow --restow -d "$dotfiles_root" -t "$HOME" rime
+
+temporary_file="$(mktemp "${TMPDIR:-/tmp}/rime-restore.XXXXXX")"
+cleanup() {
+  rm -f "$temporary_file"
+}
+trap cleanup EXIT INT TERM
+
+age --decrypt --identity "$identity_file" \
+  --output "$temporary_file" "$encrypted_file"
+
+if ! grep -q '^# Rime user dictionary' "$temporary_file"; then
+  echo "decrypted file is not a Rime user dictionary snapshot" >&2
+  exit 1
+fi
+
+mkdir -p "$restore_dir"
+cp "$temporary_file" "$restore_dir/luna_pinyin.userdb.txt"
+
+installation_id="$(
+  sed -n 's/^installation_id:[[:space:]]*//p' "$installation_file" |
+    tr -d '"[:space:]'
+)"
+current_snapshot="$rime_dir/sync/$installation_id/luna_pinyin.userdb.txt"
+previous_mtime=0
+if [[ -f "$current_snapshot" ]]; then
+  previous_mtime="$(stat -f '%m' "$current_snapshot")"
+fi
+
+if ! pgrep -x Squirrel >/dev/null 2>&1; then
+  open "$squirrel_app"
+  sleep 2
+fi
+"$squirrel_bin" --sync
+
+sync_complete=false
+for _ in $(seq 1 720); do
+  if [[ -s "$current_snapshot" ]]; then
+    current_mtime="$(stat -f '%m' "$current_snapshot")"
+    if [[ "$previous_mtime" -eq 0 || "$current_mtime" -gt "$previous_mtime" ]]; then
+      sync_complete=true
+      break
+    fi
+  fi
+  sleep 0.25
+done
+if [[ "$sync_complete" != true ]]; then
+  echo "Squirrel did not finish restoring the dictionary snapshot" >&2
+  exit 1
+fi
+
+"$squirrel_bin" --reload
+echo "Rime configuration and user dictionary restore requested successfully"
