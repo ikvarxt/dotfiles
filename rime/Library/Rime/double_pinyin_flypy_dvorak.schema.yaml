@@ -171,11 +171,23 @@ punctuator:
 
 key_binder:
   import_preset: default
-  select_first_character: bracketleft
-  select_last_character: bracketright
+  select_first_character: Control+comma
+  select_last_character: Control+period
   bindings:
+    # Programmer Dvorak 顶部数字行在不按 Shift 时输出符号。
+    # 仅在候选窗出现时，将物理 1–9 依次映射为候选 1–9；
+    # 平时仍然可以直接输入这些符号。
+    - { when: has_menu, accept: ampersand, send: "1" }
+    - { when: has_menu, accept: bracketleft, send: "2" }
+    - { when: has_menu, accept: braceleft, send: "3" }
+    - { when: has_menu, accept: braceright, send: "4" }
+    - { when: has_menu, accept: parenleft, send: "5" }
+    - { when: has_menu, accept: equal, send: "6" }
+    - { when: has_menu, accept: asterisk, send: "7" }
+    - { when: has_menu, accept: parenright, send: "8" }
+    - { when: has_menu, accept: plus, send: "9" }
     - { when: has_menu, accept: minus, send: Page_Up }
-    - { when: has_menu, accept: equal, send: Page_Down }
+    - { when: has_menu, accept: bracketright, send: Page_Down }
 
 editor:
   bindings:

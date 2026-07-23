@@ -46,9 +46,11 @@ Useful input:
 - Unicode: `U` plus a hexadecimal code point, for example `U4e2d`.
 - Number/RMB conversion: `R` plus a number.
 - UUID: `uuid`.
-- Candidate operations: `Tab`/`Shift+Tab` move through candidates,
-  `[`/`]` select the first/last character, and `Control+Delete` forgets a
-  learned candidate.
+- Candidate operations: the physical number row `1`–`9` selects candidates in
+  order even though Programmer Dvorak normally produces symbols there;
+  `Tab`/`Shift+Tab` moves through candidates, `Control+,`/`Control+.`
+  selects the first/last character, and `Control+Delete` forgets a learned
+  candidate.
 
 Personal fixed phrases go in
 `~/Library/Rime/custom_phrase_double.txt` as
