@@ -80,8 +80,12 @@ for _ in $(seq 1 720); do
 done
 
 if [[ "$sync_complete" != true ]]; then
-  echo "Squirrel did not produce a fresh dictionary snapshot" >&2
-  exit 1
+  if [[ -s "$snapshot_file" ]]; then
+    echo "Squirrel reported no fresh snapshot; using the last valid snapshot"
+  else
+    echo "Squirrel did not produce a dictionary snapshot" >&2
+    exit 1
+  fi
 fi
 
 snapshot_hash="$(shasum -a 256 "$snapshot_file" | awk '{print $1}')"

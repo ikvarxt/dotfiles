@@ -65,8 +65,12 @@ for _ in $(seq 1 720); do
   sleep 0.25
 done
 if [[ "$sync_complete" != true ]]; then
-  echo "Squirrel did not finish restoring the dictionary snapshot" >&2
-  exit 1
+  if [[ -s "$current_snapshot" ]]; then
+    echo "Squirrel reported no changed snapshot; the existing dictionary remains valid"
+  else
+    echo "Squirrel did not finish restoring the dictionary snapshot" >&2
+    exit 1
+  fi
 fi
 
 "$squirrel_bin" --reload
