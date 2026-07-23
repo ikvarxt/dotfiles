@@ -1,0 +1,13 @@
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: rime_ice_dvorak
+version: "2026-07-23"
+import_tables:
+  - rime_ice_vendor/cn_dicts/8105
+  - rime_ice_vendor/cn_dicts/base
+  - rime_ice_vendor/cn_dicts/ext
+  - rime_ice_vendor/cn_dicts/tencent
+  - rime_ice_vendor/cn_dicts/others
+...

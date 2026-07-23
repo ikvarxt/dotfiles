@@ -7,7 +7,8 @@ patch:
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
   style/inline_preedit: true
-  style/remember_size: false
+  style/memorize_size: true
+  style/show_paging: true
   style/status_message_type: long
 
   # 在菜单栏持续显示当前鼠须管状态（需要 1.1.2 之后的版本）。
@@ -15,3 +16,9 @@ patch:
 
   # 不在光标附近显示切换提示；菜单栏状态仍然保留。
   show_notifications_when: never
+
+  # 开发工具默认英文；Vim 模式按 Esc 后自动回到英文。
+  app_options/dev.zed.Zed:
+    ascii_mode: true
+    vim_mode: true
+  app_options/com.apple.Terminal/vim_mode: true
