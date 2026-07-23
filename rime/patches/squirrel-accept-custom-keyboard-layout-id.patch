@@ -1,0 +1,36 @@
+diff --git a/sources/SquirrelInputController.swift b/sources/SquirrelInputController.swift
+index c2adf74..a88dde4 100644
+--- a/sources/SquirrelInputController.swift
++++ b/sources/SquirrelInputController.swift
+@@ -171,7 +171,8 @@ final class SquirrelInputController: IMKInputController {
+       keyboardLayout = ""
+     } else if keyboardLayout == "default" {
+       keyboardLayout = "com.apple.keylayout.ABC"
+-    } else if !keyboardLayout.hasPrefix("com.apple.keylayout.") {
++    } else if !keyboardLayout.hasPrefix("com.apple.keylayout.")
++      && !keyboardLayout.hasPrefix("com.apple.keyboardlayout.") {
+       keyboardLayout = "com.apple.keylayout.\(keyboardLayout)"
+     }
+     if keyboardLayout != "" {
+diff --git a/scripts/postinstall b/scripts/postinstall
+index 7ef6cb9..1dd8b6e 100755
+--- a/scripts/postinstall
++++ b/scripts/postinstall
+@@ -15,7 +15,16 @@ if [ -z "${RIME_NO_PREBUILD}" ]; then
+     pushd "${rime_shared_data_path}" > /dev/null
+     "${squirrel_executable}" --build
+     popd > /dev/null
+-fi && (
++fi
++
++# A locally built package is ad-hoc signed. Prebuilding shared data above adds
++# files inside the bundle, so refresh the signature before InputMethodKit
++# attempts to launch the input method.
++/usr/bin/codesign --force --deep --sign - \
++    --preserve-metadata=entitlements,requirements,flags \
++    "${squirrel_app_root}"
++
++(
+     /usr/bin/sudo -u "${login_user}" "${squirrel_executable}" --enable-input-source
+     /usr/bin/sudo -u "${login_user}" "${squirrel_executable}" --select-input-source
+ )
