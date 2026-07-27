@@ -63,14 +63,3 @@ redeploy from the menu or run:
 ```sh
 "/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel" --reload
 ```
-
-The installed Programmer Dvorak layout uses the nonstandard input source ID
-prefix `com.apple.keyboardlayout.`. Upstream Squirrel currently recognizes only
-`com.apple.keylayout.` as a complete ID and otherwise prepends that prefix.
-Apply `rime/patches/squirrel-accept-custom-keyboard-layout-id.patch` when
-rebuilding Squirrel so switching through ABC cannot change Squirrel's layout.
-The same patch refreshes the ad-hoc signature after the local package
-postinstall script prebuilds shared data inside the app bundle. It also corrects
-the upstream master branch's input-source registration path from
-`/Library/Input Library/Squirrel.app` to the actual
-`/Library/Input Methods/Squirrel.app`.
