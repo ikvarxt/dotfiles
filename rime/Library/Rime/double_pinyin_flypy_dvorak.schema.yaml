@@ -168,6 +168,8 @@ reverse_lookup:
 
 punctuator:
   import_preset: default
+  half_shape:
+    _: "_"
 
 key_binder:
   import_preset: default
