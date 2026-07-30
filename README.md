@@ -2,6 +2,38 @@
 
 Using Stow to store all of my dot configuration files in this repository.
 
+## zsh
+
+```sh
+stow --restow -d ~/dotfiles -t ~ zsh
+```
+
+Replaces oh-my-zsh. `~/.zshrc` itself is **not** tracked: it is a real file
+holding this machine's PATH, work aliases, and credentials, and it pulls in the
+portable half with one line:
+
+```sh
+source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/init.zsh"
+```
+
+`init.zsh` sources the modules in a load-bearing order — `core` before `git`
+(which needs `compdef`) and before `tools` (`bindkey -e` re-links the main
+keymap, which would drop fzf's bindings):
+
+| module | contents |
+| --- | --- |
+| `core.zsh` | `compinit`, `$EDITOR`, `bindkey -e`, history, grep/history aliases |
+| `directories.zsh` | vendored from oh-my-zsh `lib/directories.zsh` |
+| `git.zsh` | vendored from the oh-my-zsh `git` plugin, plus `git_current_branch` |
+| `aliases.zsh` | portable personal aliases |
+| `tools.zsh` | starship, mise, fzf — each guarded by an existence check |
+
+The two vendored files are kept close to verbatim so upstream diffs stay
+reviewable.
+
+On a new machine, write a fresh `~/.zshrc` with the source line above; nothing
+in this package assumes anything about the host.
+
 ## Rime / Squirrel
 
 The `rime` Stow package installs the tracked Squirrel configuration, backup
