@@ -1,6 +1,11 @@
 # macOS
 .DS_Store
 
+# Herdr runtime state: only config.toml is tracked.
+herdr/.config/herdr/*.log
+herdr/.config/herdr/session.json
+herdr/.config/herdr/.plugins.lock
+
 # Rime dictionary backups: only encrypted snapshots are tracked.
 rime-data/*.txt
 rime-data/*.key
