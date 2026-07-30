@@ -599,6 +599,10 @@ require('lazy').setup({
             },
           },
         },
+
+        -- TOML: schema-aware completion/diagnostics for Cargo.toml, mise.toml, etc.
+        -- The same `taplo` binary also backs the conform formatter below.
+        taplo = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -679,6 +683,7 @@ require('lazy').setup({
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'jq' },
+        toml = { 'taplo' },
       },
     },
   },
