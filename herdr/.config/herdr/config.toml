@@ -89,12 +89,13 @@ navigate_workspace_down = ["down", "j"]
 # type = "popup" opens a session-modal terminal without changing the tab layout.
 # Popup width and height accept terminal cells or percentages such as "80%".
 # On Windows, command strings run through cmd.exe /d /c.
-# [[keys.command]]
-# key = "prefix+alt+g"
-# type = "popup"
-# command = "lazygit"
-# width = "80%"
-# height = "80%"
+[[keys.command]]
+key = "prefix+l"
+type = "popup"
+command = "lazygit"
+description = "open lazygit"
+width = "80%"
+height = "80%"
 
 # Floating scratch terminal: modal until the shell exits.
 [[keys.command]]
@@ -193,8 +194,17 @@ rows = [
   ],
 ]
 # Optional canonical agent IDs replace the default rows for matching agents.
-# [ui.sidebar.agents.rows_by_agent]
-# claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+# Claude rows swap the space name for whatever the pane reports as its title.
+[ui.sidebar.agents.rows_by_agent]
+claude = [
+  [
+    "state_icon",
+    { token = "tab", bold = true, dim = false },
+  ],
+  [
+    { token = "terminal_title_stripped", bold = false, dim = true },
+  ],
+]
 
 # Expanded space rows. Built-ins are state_icon, state_text, workspace, branch, and git_status.
 # Custom values reported through workspace metadata use a $name token, for example $jj_status.
@@ -258,14 +268,14 @@ delay_seconds = 0
 # allow_nested = false
 # Experimental local Kitty graphics rendering for attached clients.
 # Requires a Kitty graphics-compatible outer terminal.
-# kitty_graphics = false
+kitty_graphics = true
 # Save recent pane screen history across full server restarts.
 pane_history = false
 # While prefix mode is active, temporarily switch the macOS host input
 # source to an ASCII-capable keyboard layout so prefix commands register
 # even when a CJK IME is active, then restore the previous input source
 # when prefix mode exits. macOS only; best-effort. Default: false.
-# switch_ascii_input_source_in_prefix = false
+switch_ascii_input_source_in_prefix = true
 # Expose the focused pane's cursor to the outer terminal so macOS input
 # methods keep tracking the candidate window when TUIs paint their own
 # cursor (Claude Code, pi, codex). Trade-off: extra cursor visible for
