@@ -275,7 +275,12 @@ pane_history = false
 # source to an ASCII-capable keyboard layout so prefix commands register
 # even when a CJK IME is active, then restore the previous input source
 # when prefix mode exits. macOS only; best-effort. Default: false.
-switch_ascii_input_source_in_prefix = true
+# Left off: the restore call returns noErr but sometimes leaves the host on the
+# plain ASCII layout, which strands Squirrel and kills CJK input until a manual
+# input-source switch. Upstream issue ogulcancelik/herdr#1221, still open as of
+# 0.7.5. Redundant here anyway, since squirrel.custom.yaml already forces
+# ascii_mode in kitty.
+# switch_ascii_input_source_in_prefix = false
 # Expose the focused pane's cursor to the outer terminal so macOS input
 # methods keep tracking the candidate window when TUIs paint their own
 # cursor (Claude Code, pi, codex). Trade-off: extra cursor visible for
