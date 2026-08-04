@@ -94,8 +94,8 @@ key = "prefix+l"
 type = "popup"
 command = "lazygit"
 description = "open lazygit"
-width = "80%"
-height = "80%"
+width = "100%"
+height = "100%"
 
 # Floating scratch terminal: modal until the shell exits.
 [[keys.command]]
