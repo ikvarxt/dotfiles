@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""Mark herdr agent panes that hold unsent text in their input box.
+
+Polling is unavoidable here: herdr emits no event for input-box edits, so the
+draft state has to be sampled. Tab naming used to live here too and now belongs
+to the sidebar-hooks plugin, which gets a real workspace.created event.
+"""
+
+import argparse
+import json
+import re
+import subprocess
+import time
+
+# Prompt marker per detected agent. The captured group is whatever the user has
+# typed but not submitted yet.
+PROMPT_PATTERNS = {
+    "claude": re.compile(r"^\s*❯\s?(.*)$"),
+}
+
+SOURCE = "draft-watch"
+
+
+def herdr(*args):
+    result = subprocess.run(["herdr", *args], capture_output=True, text=True, check=False)
+    return result.stdout if result.returncode == 0 else None
+
+
+def agent_panes():
+    """Agent panes to inspect, or None when the server did not answer."""
+    raw = herdr("pane", "list")
+    if raw is None:
+        return None
+    panes = json.loads(raw)["result"]["panes"]
+    return [(p["pane_id"], p["agent"]) for p in panes if p.get("agent") in PROMPT_PATTERNS]
+
+
+def draft_text(pane_id, agent):
+    # `recent` reads the live bottom of the buffer, so scrolling a pane back or
+    # sitting in copy mode does not hide the input box from us.
+    screen = herdr("pane", "read", pane_id, "--source", "recent", "--lines", "12")
+    if screen is None:
+        return None
+    for line in reversed(screen.splitlines()):
+        match = PROMPT_PATTERNS[agent].match(line)
+        if match:
+            return match.group(1).strip()
+    return None
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--interval", type=float, default=2.0)
+    parser.add_argument("--token", default="draft")
+    parser.add_argument("--mark", default="✎")
+    parser.add_argument("--once", action="store_true")
+    parser.add_argument("--verbose", action="store_true")
+    args = parser.parse_args()
+
+    # Long enough to survive one slow cycle, short enough that a killed watcher
+    # never leaves a stale mark pinned in the sidebar.
+    ttl_ms = max(int(args.interval * 3 * 1000), 3000)
+    marked = set()
+    misses = 0
+
+    while True:
+        panes = agent_panes()
+        if panes is None:
+            # The plugin startup hook re-launches this on the next server, so a
+            # server that stays gone should take the watcher with it rather than
+            # poll a dead socket forever. A few misses still ride out a reload.
+            misses += 1
+            if misses >= 5:
+                return
+            time.sleep(args.interval)
+            continue
+        misses = 0
+        for pane_id, agent in panes:
+            text = draft_text(pane_id, agent)
+            if text:
+                herdr(
+                    "pane", "report-metadata", pane_id,
+                    "--source", SOURCE,
+                    "--token", f"{args.token}={args.mark}",
+                    "--ttl-ms", str(ttl_ms),
+                )
+                marked.add(pane_id)
+            elif pane_id in marked:
+                herdr(
+                    "pane", "report-metadata", pane_id,
+                    "--source", SOURCE,
+                    "--clear-token", args.token,
+                )
+                marked.discard(pane_id)
+            if args.verbose:
+                print(f"{pane_id} {agent} draft={text!r}", flush=True)
+        if args.once:
+            return
+        time.sleep(args.interval)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass

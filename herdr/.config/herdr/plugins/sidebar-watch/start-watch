@@ -1,0 +1,12 @@
+#!/bin/sh
+# Startup hooks are one-shot, not supervised, so the watcher is detached here and
+# left to exit on its own once the server goes away. The next server start runs
+# this hook again.
+
+set -eu
+
+watcher="$HOME/.local/bin/herdr-sidebar-watch"
+[ -x "$watcher" ] || exit 0
+pgrep -f herdr-sidebar-watch >/dev/null 2>&1 && exit 0
+
+nohup "$watcher" >>"$HERDR_PLUGIN_STATE_DIR/watch.log" 2>&1 &

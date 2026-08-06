@@ -199,6 +199,8 @@ rows = [
 claude = [
   [
     "state_icon",
+    # Reported by herdr-draft-watch; disappears on its own when unreported.
+    { token = "$draft", bold = true, dim = false },
     { token = "tab", bold = true, dim = false },
   ],
   [

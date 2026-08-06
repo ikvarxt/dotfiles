@@ -1,0 +1,9 @@
+id = "leoduan.sidebar-watch"
+name = "Sidebar watch"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Run the sidebar draft watcher for as long as the server is up"
+platforms = ["macos", "linux"]
+
+[[startup]]
+command = ["./start-watch"]
