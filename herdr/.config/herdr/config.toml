@@ -110,7 +110,7 @@ height = "80%"
 [[keys.command]]
 key = "prefix+i"
 type = "popup"
-command = '''sel=$(herdr pane list | jq -r '.result.panes[] | [.pane_id, (.agent // "-"), (.terminal_title_stripped // .cwd), (if .focused then "<= current" else "" end)] | @tsv' | column -t -s "$(printf '\t')" | fzf --reverse --no-multi --header="enter: copy pane id") && [ -n "$sel" ] && printf '%s' "${sel%% *}" | pbcopy'''
+command = '''tabs=$(herdr tab list) && sel=$(herdr pane list | jq -r --argjson t "$tabs" '($t.result.tabs | map({key:.tab_id, value:.label}) | from_entries) as $tl | .result.panes[] | [.pane_id, (.label // $tl[.tab_id] // "-"), (.agent // "-"), (.terminal_title_stripped // .cwd), (if .focused then "<= current" else "" end)] | @tsv' | column -t -s "$(printf '\t')" | fzf --reverse --no-multi --header="enter: copy pane id") && [ -n "$sel" ] && printf '%s' "${sel%% *}" | pbcopy'''
 description = "pick pane id to clipboard"
 width = "80%"
 height = "60%"
