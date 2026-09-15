@@ -25,9 +25,5 @@ patch:
   # Lark 默认中文。
   app_options/com.larksuite.larkApp/ascii_mode: false
 
-  # Kitty 默认英文；使用其原生行内预编辑，不启用应用级 Vim 模式。
-  app_options/net.kovidgoyal.kitty:
-    ascii_mode: true
-
   # 覆盖鼠须管内置的 MacVim Vim 模式规则。
   app_options/org.vim.MacVim/vim_mode: false
