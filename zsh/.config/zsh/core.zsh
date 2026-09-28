@@ -15,7 +15,12 @@ _comp_options+=(globdots)
 export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43'
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'   # case-insensitive
+# Tried in order, first one with matches wins: prefix, then word-part
+# (`f-b` -> `foo-bar`), then substring anywhere. fzf-tab fuzzy-filters the rest.
+zstyle ':completion:*' matcher-list \
+  'm:{a-z}={A-Za-z}' \
+  'm:{a-z}={A-Za-z} r:|[._-]=* r:|=*' \
+  'm:{a-z}={A-Za-z} l:|=* r:|=*'
 zstyle ':completion:*' group-name ''                     # group by kind
 zstyle ':completion:*:descriptions' format '[%d]'        # ...with headers
 
