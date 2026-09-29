@@ -1,0 +1,12 @@
+patch:
+  # Replace punctuation menus with direct output in both width modes.
+  'punctuator/half_shape/[': '['
+  'punctuator/half_shape/]': ']'
+  'punctuator/half_shape/{': '【'
+  'punctuator/half_shape/}': '】'
+  'punctuator/half_shape/*': '……'
+  'punctuator/full_shape/[': '['
+  'punctuator/full_shape/]': ']'
+  'punctuator/full_shape/{': '【'
+  'punctuator/full_shape/}': '】'
+  'punctuator/full_shape/*': '……'
