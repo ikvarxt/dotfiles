@@ -18,7 +18,12 @@ for required_file in "$encrypted_file" "$identity_file" "$squirrel_bin"; do
   fi
 done
 
-stow --restow -d "$dotfiles_root" -t "$HOME" rime
+config_source="$dotfiles_root/rime/default.custom.yaml"
+config_link="$rime_dir/default.custom.yaml"
+if [[ ! -L "$config_link" || ! "$config_link" -ef "$config_source" ]]; then
+  echo "Rime configuration is not linked from $dotfiles_root/rime; link it before restoring" >&2
+  exit 1
+fi
 
 temporary_file="$(mktemp "${TMPDIR:-/tmp}/rime-restore.XXXXXX")"
 cleanup() {

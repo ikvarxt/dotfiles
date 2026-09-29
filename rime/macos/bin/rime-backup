@@ -113,14 +113,14 @@ fi
 if [[ "$mode" == "--push" ]]; then
   other_changes="$(
     git -C "$dotfiles_root" status --porcelain=v1 -- \
-      . ':(exclude)rime/**' ':(exclude)rime-data/**'
+      . ':(exclude)rime-data/**'
   )"
   if [[ -n "$other_changes" ]]; then
     echo "dotfiles has unrelated changes; snapshot kept locally without commit" >&2
     exit 0
   fi
 
-  git -C "$dotfiles_root" add -- rime rime-data
+  git -C "$dotfiles_root" add -- rime-data
   if ! git -C "$dotfiles_root" diff --cached --quiet; then
     git -C "$dotfiles_root" commit -m "backup(rime): update $(date +%F)"
   fi

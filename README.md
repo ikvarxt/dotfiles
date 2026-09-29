@@ -1,6 +1,7 @@
 # My dotfiles
 
-Using Stow to store all of my dot configuration files in this repository.
+Using Stow for most dot configuration files. Rime has a shared source tree
+that is linked into each platform's Rime user directory.
 
 ## zsh
 
@@ -36,17 +37,28 @@ in this package assumes anything about the host.
 
 ## Rime / Squirrel
 
-The `rime` Stow package installs the tracked Squirrel configuration, backup
-commands, and LaunchAgents:
+The `rime/` directory contains the Rime configuration files at their native
+relative paths. It is not a Stow package. An agent links each tracked top-level Rime
+data entry except `macos/` into the frontend's user directory:
 
-```sh
-stow --restow -d ~/dotfiles -t ~ rime
-```
+| Frontend | User directory |
+| --- | --- |
+| Squirrel (macOS) | `~/Library/Rime` |
+| Fcitx5 Rime (Linux) | `~/.local/share/fcitx5/rime` |
+| IBus Rime (Linux) | `~/.config/ibus/rime` |
+| Weasel (Windows) | `%APPDATA%\Rime` by default |
+
+On macOS, also link `rime/macos/squirrel.custom.yaml` into `~/Library/Rime`,
+`rime/macos/bin/*` into `~/.local/bin`, and `rime/macos/LaunchAgents/*` into
+`~/Library/LaunchAgents`. Keep the user directory itself real: `build/`,
+`sync/`, `*.userdb/`, `installation.yaml`, and `user.yaml` are local runtime
+data. Do not replace an existing regular file while creating links.
 
 The live LevelDB under `~/Library/Rime/*.userdb/` is never committed. A daily
 job asks Squirrel to create a consistent text snapshot, encrypts changed
 snapshots with `age`, and stores the ciphertext in `rime-data/`. A weekly job
-commits and pushes only when the rest of the dotfiles worktree is clean.
+commits and pushes only the encrypted snapshot when the rest of the dotfiles
+worktree is clean.
 
 Manual commands:
 
@@ -90,7 +102,7 @@ Personal fixed phrases go in
 `phrase<Tab>code<Tab>weight`. Never store secrets there.
 
 The vendored Rime Ice source revision and license are recorded in
-`rime/Library/Rime/rime_ice_vendor/SOURCE.md`. After changing configuration,
+`rime/rime_ice_vendor/SOURCE.md`. After changing configuration,
 redeploy from the menu or run:
 
 ```sh
