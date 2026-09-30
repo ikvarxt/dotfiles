@@ -28,9 +28,19 @@ keymap, which would drop fzf's bindings):
 | `git.zsh` | vendored from the oh-my-zsh `git` plugin, plus `git_current_branch` |
 | `aliases.zsh` | portable personal aliases |
 | `tools.zsh` | starship, mise, fzf — each guarded by an existence check |
+| `smart-suggestion.zsh` | Ctrl-O LLM completion, loaded only when its build is installed |
 
 The two vendored files are kept close to verbatim so upstream diffs stay
 reviewable.
+
+`smart-suggestion.zsh` needs zsh-autosuggestions, a binary built by
+`smart-suggestion/install.sh` (upstream plus `enable-thinking.patch`, needs Go),
+and magpie running, whose local gateway serves the model:
+
+```sh
+brew install zsh-autosuggestions
+~/dotfiles/smart-suggestion/install.sh
+```
 
 On a new machine, write a fresh `~/.zshrc` with the source line above; nothing
 in this package assumes anything about the host.

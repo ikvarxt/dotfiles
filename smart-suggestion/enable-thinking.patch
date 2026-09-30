@@ -1,0 +1,24 @@
+diff --git a/cmd/smart-suggestion/main.go b/cmd/smart-suggestion/main.go
+index 1770e3d..440262f 100644
+--- a/cmd/smart-suggestion/main.go
++++ b/cmd/smart-suggestion/main.go
+@@ -38,6 +38,8 @@ type OpenAIMessage struct {
+ type OpenAIRequest struct {
+ 	Model    string          `json:"model"`
+ 	Messages []OpenAIMessage `json:"messages"`
++	// Non-standard field understood by DashScope-compatible endpoints; nil keeps it off the wire.
++	EnableThinking *bool `json:"enable_thinking,omitempty"`
+ }
+ 
+ type OpenAIChoice struct {
+@@ -1821,6 +1823,10 @@ func fetchDeepSeek() (string, error) {
+ 			{Role: "user", Content: input},
+ 		},
+ 	}
++	if v := os.Getenv("DEEPSEEK_ENABLE_THINKING"); v != "" {
++		enabled := v == "true"
++		request.EnableThinking = &enabled
++	}
+ 
+ 	jsonData, err := json.Marshal(request)
+ 	if err != nil {
