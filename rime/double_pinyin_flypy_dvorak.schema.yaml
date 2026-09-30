@@ -173,8 +173,9 @@ punctuator:
 
 key_binder:
   import_preset: default
-  select_first_character: Control+comma
-  select_last_character: Control+period
+  # Programmer Dvorak 的 Ctrl 层没有 , 和 .，Ctrl+, / Ctrl+. 到不了 Rime。
+  select_first_character: Control+i
+  select_last_character: Control+o
   bindings:
     # Programmer Dvorak 顶部数字行在不按 Shift 时输出符号。
     # 仅在候选窗出现时，将物理 1–9 依次映射为候选 1–9；
