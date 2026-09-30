@@ -34,7 +34,7 @@ The two vendored files are kept close to verbatim so upstream diffs stay
 reviewable.
 
 `smart-suggestion.zsh` needs zsh-autosuggestions, a binary built by
-`smart-suggestion/install.sh` (upstream plus `enable-thinking.patch`, needs Go),
+`smart-suggestion/install.sh` (upstream plus `deepseek-provider.patch`, needs Go),
 and magpie running, whose local gateway serves the model:
 
 ```sh

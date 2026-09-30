@@ -1,5 +1,5 @@
 diff --git a/cmd/smart-suggestion/main.go b/cmd/smart-suggestion/main.go
-index 1770e3d..440262f 100644
+index 1770e3d..faadbb8 100644
 --- a/cmd/smart-suggestion/main.go
 +++ b/cmd/smart-suggestion/main.go
 @@ -38,6 +38,8 @@ type OpenAIMessage struct {
@@ -22,3 +22,12 @@ index 1770e3d..440262f 100644
  
  	jsonData, err := json.Marshal(request)
  	if err != nil {
+@@ -1841,6 +1847,8 @@ func fetchDeepSeek() (string, error) {
+ 
+ 	req.Header.Set("Content-Type", "application/json")
+ 	req.Header.Set("Authorization", "Bearer "+apiKey)
++	// Gateways such as magpie attribute usage by the User-Agent product token.
++	req.Header.Set("User-Agent", "smart-suggestion")
+ 
+ 	client := &http.Client{Timeout: 30 * time.Second}
+ 	resp, err := client.Do(req)
