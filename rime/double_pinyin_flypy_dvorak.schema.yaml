@@ -3,14 +3,14 @@
 
 schema:
   schema_id: double_pinyin_flypy_dvorak
-  name: 小鹤双拼・Programmer Dvorak
-  version: "1.2"
+  name: 小鹤双拼・Dvorak
+  version: "1.3"
   author:
     - double pinyin layout by 鹤
-    - Programmer Dvorak integration by Codex
+    - Standard Dvorak integration by Codex
     - Rime schema based on rime/rime-double-pinyin
   description: |
-    英文和小鹤双拼编码均使用 Programmer Dvorak 的逻辑键位。
+    英文和小鹤双拼编码均使用标准 Dvorak 的逻辑键位。
   dependencies:
     - stroke
     - melt_eng_dvorak
@@ -66,8 +66,8 @@ engine:
     - uniquifier
 
 speller:
-  # Squirrel 按 Programmer Dvorak 将物理按键转换为逻辑字母，
-  # 小鹤双拼直接使用这些 Dvorak 逻辑字母，不再映射回 QWERTY 位置。
+  # Squirrel 按标准 Dvorak 将物理按键转换为逻辑字母；
+  # 小鹤双拼直接使用这些字母，无须再次映射键位。
   alphabet: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`"
   initials: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
   delimiter: " '"
@@ -173,24 +173,9 @@ punctuator:
 
 key_binder:
   import_preset: default
-  # Programmer Dvorak 的 Ctrl 层没有 , 和 .，Ctrl+, / Ctrl+. 到不了 Rime。
-  select_first_character: Control+i
-  select_last_character: Control+o
-  bindings:
-    # Programmer Dvorak 顶部数字行在不按 Shift 时输出符号。
-    # 仅在候选窗出现时，将物理 1–9 依次映射为候选 1–9；
-    # 无候选时这些键仍由 punctuator 直接上屏。
-    - { when: has_menu, accept: ampersand, send: "1" }
-    - { when: has_menu, accept: bracketleft, send: "2" }
-    - { when: has_menu, accept: braceleft, send: "3" }
-    - { when: has_menu, accept: braceright, send: "4" }
-    - { when: has_menu, accept: parenleft, send: "5" }
-    - { when: has_menu, accept: equal, send: "6" }
-    - { when: has_menu, accept: asterisk, send: "7" }
-    - { when: has_menu, accept: parenright, send: "8" }
-    - { when: has_menu, accept: plus, send: "9" }
-    - { when: has_menu, accept: minus, send: Page_Up }
-    - { when: has_menu, accept: bracketright, send: Page_Down }
+  # 标准 Dvorak 的数字行直接输入 1–9；候选导航沿用 Control+n / Control+p。
+  select_first_character: Control+comma
+  select_last_character: Control+period
 
 editor:
   bindings:

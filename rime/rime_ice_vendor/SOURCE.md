@@ -8,4 +8,4 @@ Selected dictionaries and Lua modules are vendored from:
 - License: see `LICENSE` in this directory
 
 The local schema and top-level dictionary manifests remain separate so updates
-to these assets cannot overwrite the Programmer Dvorak mapping.
+to these assets cannot overwrite the standard Dvorak configuration.

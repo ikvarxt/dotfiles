@@ -8,7 +8,7 @@
 
 schema:
   schema_id: melt_eng_dvorak
-  name: Easy English・Programmer Dvorak dependency
+  name: Easy English・Dvorak dependency
   version: "2026-01-30"
   author:
     - Patrick <ipatrickmac@gmail.com>
