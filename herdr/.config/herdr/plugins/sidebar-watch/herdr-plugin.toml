@@ -1,4 +1,4 @@
-id = "leoduan.sidebar-watch"
+id = "local.sidebar-watch"
 name = "Sidebar watch"
 version = "0.1.0"
 min_herdr_version = "0.7.0"
